@@ -18,24 +18,23 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if($validator->fails())
+        if(!$validator->fails())
         {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email =$request->email;
+            $user->password=bcrypt($request->password);
+            $user->save();
+
             return response()->json([
-                'status_code'=>400,
-                'message'=>'Bad Request'
+                'status_code'=>200,
+                'message' =>'User created successfully!'
             ]);
         }
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email =$request->email;
-        $user->password=bcrypt($request->password);
-        $user->save();
-
-        return response()->json([
-            'status_code'=>200,
-            'message' =>'User created successfully!'
-        ]);
+        else
+        {
+            return $validator->errors();
+        }
     }
 
     //user login
@@ -49,10 +48,7 @@ class AuthController extends Controller
 
         if($validator->fails())
         {
-            return response()->json([
-                'status_code'=>400,
-                'message'=>'Bad Request'
-            ]);
+            return $validator->errors();
         }
 
         $credentials = request(['email','password']);
@@ -65,7 +61,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $user=User::where('email',$request->email)->first();
+        $user = User::where('email',$request->email)->first();
 
         $tokenResult = $user->createToken('authToken')->plainTextToken;
 
@@ -79,6 +75,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
+
         return response()->json([
             'status_code' =>200,
             'message' =>'Token deleted successfull!'
