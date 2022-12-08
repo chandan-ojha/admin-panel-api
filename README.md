@@ -1,4 +1,4 @@
-<h2 align="center"> !! Basically, this repository create to deploy my Admin Panel & Blog API !! </h2>
+<h2 align="center"> Admin Panel & Blog API </h2>
 
 <h3> Tools and Technology </h3>
 
