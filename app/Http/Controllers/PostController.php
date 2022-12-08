@@ -41,4 +41,39 @@ class PostController extends BaseController
         return $this->sendError('204','Data not found!');
     }
 
+    /*
+     * API: 2
+     * Purpose: Get Single Post Info
+     * Route: api/pp/get-single-post-info
+     * Method: Get
+     * Parameter: post_id
+    */
+    public function get_single_post_info($post_id)
+    {
+        $single_post_info = Post::with([
+            'get_categories' => function($qry){
+                $qry->orderBy('id','asc');
+                $qry->select(['id','cat_name']);
+            },
+            'get_tag_list' => function($qry){
+                $qry->orderBy('id','asc');
+                $qry->select([]);
+            }
+        ])
+            ->where('id',$post_id)
+            ->orderBy('id','asc')
+            ->get(['id','post_title','description','image','cat_id']);
+
+        //~ Check Availability of data
+        if(!empty($single_post_info)){
+            return $this->sendResponse(200,'Success.',
+                [
+                    'single_post_info' => $single_post_info
+                ]
+            );
+        }
+        //~ Empty Data Response
+        return $this->sendError('204','Data not found!');
+    }
+
 }

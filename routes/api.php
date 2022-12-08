@@ -41,6 +41,16 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
      * Post Api Route List
     */
     Route::get('get-post-list',[PostController::class,'get_post_list']);
+    Route::get('single-post-info/{post_id}',[PostController::class,'get_single_post_info']);
+
+    /*
+     * Category Api Route List
+    */
+
+
+    /*
+     * Tag Api Route List
+    */
 
     Route::post('/logout',[AuthController::class,'logout']);
 });
