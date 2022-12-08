@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -56,7 +57,15 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     /*
      * Tag Api Route List
     */
+    Route::get('get-tag-list',[TagController::class,'get_tag_list']);
+    Route::get('get-single-tag-info/{tag_id}',[TagController::class,'get_single_tag_info']);
+    Route::post('create-tag',[TagController::class,'create_tag']);
+    Route::put('update-tag/{tag_id}',[TagController::class,'update_tag']);
+    Route::delete('delete-tag/{tag_id}',[TagController::class,'delete_tag']);
 
+    /*
+     * Logout
+    */
     Route::post('/logout',[AuthController::class,'logout']);
 });
 

@@ -16,7 +16,7 @@ class EmployeeController extends BaseController
     /*
      * API: 1
      * Purpose: Get Employee List
-     * Route: api/pp/get-employee-list
+     * Route: api/get-employee-list
      * Method: Get
     */
     public function get_employee_list(){
@@ -38,7 +38,7 @@ class EmployeeController extends BaseController
     /*
      * API: 2
      * Purpose: Get Single Employee Information
-     * Route: api/pp/get-single-employee-info
+     * Route: api/get-single-employee-info
      * Method: Get
      * Parameter: emp_id
     */
@@ -60,7 +60,7 @@ class EmployeeController extends BaseController
     /*
      * API: 3
      * Purpose: Create Employee
-     * Route: api/pp/create-employee
+     * Route: api/create-employee
      * Method: Post
     */
     public function create_employee(Request $request){
@@ -96,7 +96,7 @@ class EmployeeController extends BaseController
     /*
      * API: 4
      * Purpose: Update Employee
-     * Route: api/pp/update-employee
+     * Route: api/update-employee
      * Method: Put
      * Parameter: emp_id
     */
@@ -134,7 +134,7 @@ class EmployeeController extends BaseController
     /*
      * API: 5
      * Purpose: Delete Employee
-     * Route: api/pp/delete-employee
+     * Route: api/delete-employee
      * Method: delete
      * Parameter: emp_id
     */

@@ -10,7 +10,7 @@ class PostController extends BaseController
     /*
      * API: 1
      * Purpose: Get Post List
-     * Route: api/pp/get-post-list
+     * Route: api/get-post-list
      * Method: Get
     */
     public function get_post_list()
@@ -44,7 +44,7 @@ class PostController extends BaseController
     /*
      * API: 2
      * Purpose: Get Single Post Info
-     * Route: api/pp/get-single-post-info
+     * Route: api/get-single-post-info
      * Method: Get
      * Parameter: post_id
     */

@@ -10,7 +10,7 @@ class CategoryController extends BaseController
      /*
       * API: 1
       * Purpose: Get Category List
-      * Route: api/pp/get-category-list
+      * Route: api/get-category-list
       * Method: Get
      */
      public function get_category_list()
@@ -33,7 +33,7 @@ class CategoryController extends BaseController
     /*
      * API: 2
      * Purpose: Get Single Category Information
-     * Route: api/pp/get-single-category-info
+     * Route: api/get-single-category-info
      * Method: cat_id
     */
     public function get_single_category_info($cat_id)
@@ -55,12 +55,13 @@ class CategoryController extends BaseController
     /*
      * API: 3
      * Purpose: Create Category
-     * Route: api/pp/create-category
+     * Route: api/create-category
      * Method: Post
     */
     public function create_category(Request $request)
     {
         $category = new Category();
+
         $category->cat_name = $request->cat_name;
 
         if($category->save())
@@ -84,13 +85,14 @@ class CategoryController extends BaseController
     /*
      * API: 4
      * Purpose: Update Category
-     * Route: api/pp/update-category
+     * Route: api/update-category
      * Method: Put
      * Parameter: cat_id
     */
     public function update_category(Request $request, $cat_id)
     {
         $update_category = Category::where('id',$cat_id)->first();
+
         $update_category->cat_name = $request->cat_name;
 
         if($update_category->save())
@@ -115,7 +117,7 @@ class CategoryController extends BaseController
     /*
      * API: 5
      * Purpose: Delete Category
-     * Route: api/pp/delete-category
+     * Route: api/delete-category
      * Method: delete
      * Parameter: cat_id
     */
@@ -135,7 +137,6 @@ class CategoryController extends BaseController
                 'message' =>"Category not deleted!"
             ]);
         }
-
     }
 
 }
