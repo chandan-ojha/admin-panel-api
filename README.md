@@ -1,11 +1,11 @@
-<h4 align="center"> !! Basically, this repository create to deploy my Admin Panel & Blog API !! </h4>
+<h2 align="center"> !! Basically, this repository create to deploy my Admin Panel & Blog API !! </h2>
 
-## Tools and Technology
+<h3> Tools and Technology </h3>
 
 - <p>Framework: Laravel 9</p>
 - <p>Database: MySQL</p>
 
-## API List
+<h3> API List </h3>
 
 <p> 1) Login</p>
 <p> 2) Registration </p>
