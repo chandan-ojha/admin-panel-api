@@ -76,4 +76,15 @@ class PostController extends BaseController
         return $this->sendError('204','Data not found!');
     }
 
+    /*
+    * API: 3
+    * Purpose: Create Post
+    * Route: api/create-post
+    * Method: Post
+   */
+    public function create_post(Request $request)
+    {
+        return $request;
+    }
+
 }
