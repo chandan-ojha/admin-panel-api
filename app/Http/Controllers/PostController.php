@@ -21,7 +21,7 @@ class PostController extends BaseController
                 $qry->orderBy('id','asc');
                 $qry->select(['id','cat_name']);
             },
-            'get_tag_list' => function($qry){
+            'get_tags' => function($qry){
                 $qry->orderBy('id','asc');
                 $qry->select([]);
             }
@@ -56,7 +56,7 @@ class PostController extends BaseController
                 $qry->orderBy('id','asc');
                 $qry->select(['id','cat_name']);
             },
-            'get_tag_list' => function($qry){
+            'get_tags' => function($qry){
                 $qry->orderBy('id','asc');
                 $qry->select([]);
             }
@@ -88,27 +88,40 @@ class PostController extends BaseController
         $validator = Validator::make($request->all(),[
             'post_title' =>'required',
             'description' => 'required',
-            'image' => 'required',
-            'cat_id' => 'required',
+            'cat_id' => 'required'
         ]);
 
-        if(!$validator->fails())
+        if($validator->fails())
         {
-            $post = new Post();
-            $post->post_title = $request->post_title;
-            $post->description = $request->description;
-            $post->image = $request->image;
-            $post->cat_id = $request->cat_id;
-            $post->save();
-
             return response()->json([
-                'status_code'=>200,
-                'message' =>'Post created successfully!'
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $post = new Post();
+        $post->post_title = $request->post_title;
+        $post->description = $request->description;
+        $post->image = $request->image;
+        $post->cat_id = $request->cat_id;
+
+        if($post->save())
+        {
+            return response()->json([
+                'status_code' =>200,
+                'message' =>"Post created successfully!",
+                'id' => $post->id,
+                'post_title' => $post->post_title,
+                'description' => $post->description,
+                'cat_id' => $post->cat_id,
             ]);
         }
         else
         {
-            return $validator->errors();
+            return response()->json([
+                'status_code' =>400,
+                'message' =>"Post not created!"
+            ]);
         }
     }
 
