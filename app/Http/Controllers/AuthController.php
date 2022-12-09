@@ -18,22 +18,33 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if(!$validator->fails())
+        if($validator->fails())
         {
-            $user = new User();
-            $user->name = $request->name;
-            $user->email =$request->email;
-            $user->password=bcrypt($request->password);
-            $user->save();
-
             return response()->json([
-                'status_code'=>200,
-                'message' =>'User created successfully!'
+                'status_code'=>400,
+                'message'=>'Validation Error.',
             ]);
         }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email =$request->email;
+        $user->password=bcrypt($request->password);
+
+        if($user->save())
+        {
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'User created successfully!'
+            ]);
+        }
+
         else
         {
-            return $validator->errors();
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'User not created!'
+            ]);
         }
     }
 
