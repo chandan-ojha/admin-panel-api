@@ -125,4 +125,53 @@ class PostController extends BaseController
         }
     }
 
+    /*
+     * API: 4
+     * Purpose: Update Post
+     * Route: api/update-post
+     * Method: Put
+     * Parameter: post_id
+    */
+    public function update_post(Request $request, $post_id)
+    {
+        $validator = Validator::make($request->all(),[
+            'post_title' =>'required',
+            'description' => 'required',
+            'cat_id' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $update_post = Post::where('id',$post_id)->first();
+        $update_post->post_title = $request->post_title;
+        $update_post->description = $request->description;
+        $update_post->image = $request->image;
+        $update_post->cat_id = $request->cat_id;
+
+        if($update_post->save())
+        {
+            return response()->json([
+                'status_code' =>200,
+                'message' =>"Post updated successfully!",
+                'id' => $update_post->id,
+                'post_title' => $update_post->post_title,
+                'description' => $update_post->description,
+                'cat_id' => $update_post->cat_id,
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status_code' =>400,
+                'message' =>"Post not updated!"
+            ]);
+        }
+    }
+
 }

@@ -45,6 +45,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('get-post-list',[PostController::class,'get_post_list']);
     Route::get('get-single-post-info/{post_id}',[PostController::class,'get_single_post_info']);
     Route::post('create-post',[PostController::class,'create_post']);
+    Route::put('update-post/{post_id}',[PostController::class,'update_post']);
 
     /*
      * Category Api Route List
