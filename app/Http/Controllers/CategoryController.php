@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends BaseController
 {
@@ -60,8 +61,19 @@ class CategoryController extends BaseController
     */
     public function create_category(Request $request)
     {
-        $category = new Category();
+        $validator = Validator::make($request->all(),[
+            'cat_name' =>'required'
+        ]);
 
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $category = new Category();
         $category->cat_name = $request->cat_name;
 
         if($category->save())
@@ -91,8 +103,19 @@ class CategoryController extends BaseController
     */
     public function update_category(Request $request, $cat_id)
     {
-        $update_category = Category::where('id',$cat_id)->first();
+        $validator = Validator::make($request->all(),[
+            'cat_name' =>'required'
+        ]);
 
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $update_category = Category::where('id',$cat_id)->first();
         $update_category->cat_name = $request->cat_name;
 
         if($update_category->save())
@@ -121,7 +144,8 @@ class CategoryController extends BaseController
      * Method: delete
      * Parameter: cat_id
     */
-    public function delete_category($cat_id){
+    public function delete_category($cat_id)
+    {
         $category = Category::where('id',$cat_id)->first();
 
         if($category->delete())

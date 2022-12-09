@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /*
  * Project Name: Admin Panel
@@ -19,7 +20,8 @@ class EmployeeController extends BaseController
      * Route: api/get-employee-list
      * Method: Get
     */
-    public function get_employee_list(){
+    public function get_employee_list()
+    {
         $employee_list = Employee::get(['id','name','position','age','start_date','salary']);
 
         //~ Check Availability of data
@@ -42,7 +44,8 @@ class EmployeeController extends BaseController
      * Method: Get
      * Parameter: emp_id
     */
-    public function get_single_employee_info($emp_id){
+    public function get_single_employee_info($emp_id)
+    {
         $employee_info = Employee::where('id',$emp_id)->first();
 
         //~ Check Availability of data
@@ -63,7 +66,24 @@ class EmployeeController extends BaseController
      * Route: api/create-employee
      * Method: Post
     */
-    public function create_employee(Request $request){
+    public function create_employee(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' =>'required',
+            'position' => 'required',
+            'age' => 'required',
+            'start_date' => 'required',
+            'salary' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
         $employee = new Employee();
         $employee->name = $request->name;
         $employee->position = $request->position;
@@ -100,7 +120,24 @@ class EmployeeController extends BaseController
      * Method: Put
      * Parameter: emp_id
     */
-    public function update_employee(Request $request, $emp_id){
+    public function update_employee(Request $request, $emp_id)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' =>'required',
+            'position' => 'required',
+            'age' => 'required',
+            'start_date' => 'required',
+            'salary' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
         $update_employee = Employee::where('id',$emp_id)->first();
         $update_employee->name = $request->name;
         $update_employee->position = $request->position;
@@ -128,7 +165,6 @@ class EmployeeController extends BaseController
                 'message' =>"Employee not updated !"
             ]);
         }
-
     }
 
     /*
@@ -138,7 +174,8 @@ class EmployeeController extends BaseController
      * Method: delete
      * Parameter: emp_id
     */
-    public function delete_employee($emp_id){
+    public function delete_employee($emp_id)
+    {
         $employee = Employee::where('id',$emp_id)->first();
 
         if($employee->delete())
@@ -154,7 +191,6 @@ class EmployeeController extends BaseController
                 'message' =>"Employee not deleted!"
             ]);
         }
-
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends BaseController
 {
@@ -60,8 +61,19 @@ class TagController extends BaseController
     */
     public function create_tag(Request $request)
     {
-        $tag = new Tag();
+        $validator = Validator::make($request->all(),[
+            'tag_title' =>'required'
+        ]);
 
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $tag = new Tag();
         $tag->tag_title = $request->tag_title;
 
         if($tag->save())
@@ -91,8 +103,19 @@ class TagController extends BaseController
     */
     public function update_tag(Request $request, $tag_id)
     {
-        $update_tag = Tag::where('id',$tag_id)->first();
+        $validator = Validator::make($request->all(),[
+            'tag_title' =>'required'
+        ]);
 
+        if($validator->fails())
+        {
+            return response()->json([
+                'status_code'=>400,
+                'message'=>'Validation Error.',
+            ]);
+        }
+
+        $update_tag = Tag::where('id',$tag_id)->first();
         $update_tag->tag_title = $request->tag_title;
 
         if($update_tag->save())
