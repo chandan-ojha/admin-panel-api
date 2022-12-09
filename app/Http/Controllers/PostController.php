@@ -174,4 +174,30 @@ class PostController extends BaseController
         }
     }
 
+    /*
+     * API: 5
+     * Purpose: Delete Post
+     * Route: api/delete-post
+     * Method: delete
+     * Parameter: post_id
+    */
+    public function delete_post($post_id)
+    {
+        $post = Post::where('id',$post_id)->first();
+
+        if($post->delete())
+        {
+            return response()->json([
+                'status_code' =>200,
+                'message' =>"Post deleted successfully!"
+            ]);
+        }
+        else {
+            return response()->json([
+                'status_code' =>400,
+                'message' =>"Post not deleted!"
+            ]);
+        }
+    }
+
 }
