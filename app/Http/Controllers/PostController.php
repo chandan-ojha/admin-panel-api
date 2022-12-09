@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends BaseController
 {
@@ -84,7 +85,31 @@ class PostController extends BaseController
    */
     public function create_post(Request $request)
     {
-        return $request;
+        $validator = Validator::make($request->all(),[
+            'post_title' =>'required',
+            'description' => 'required',
+            'image' => 'required',
+            'cat_id' => 'required',
+        ]);
+
+        if(!$validator->fails())
+        {
+            $post = new Post();
+            $post->post_title = $request->post_title;
+            $post->description = $request->description;
+            $post->image = $request->image;
+            $post->cat_id = $request->cat_id;
+            $post->save();
+
+            return response()->json([
+                'status_code'=>200,
+                'message' =>'Post created successfully!'
+            ]);
+        }
+        else
+        {
+            return $validator->errors();
+        }
     }
 
 }

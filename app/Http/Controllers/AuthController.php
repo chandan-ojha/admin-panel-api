@@ -81,4 +81,5 @@ class AuthController extends Controller
             'message' =>'Token deleted successfull!'
         ]);
     }
+
 }
