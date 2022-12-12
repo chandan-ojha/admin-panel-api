@@ -72,4 +72,5 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::post('/logout',[AuthController::class,'logout']);
 });
 
+Route::get('get-employee-list-test',[EmployeeController::class,'get_employee_list']);
 
