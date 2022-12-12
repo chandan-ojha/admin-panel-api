@@ -31,6 +31,12 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     /*
+     * User Api Route List
+    */
+    Route::get('/authenticated-user',[AuthController::class,'authenticated_user']);
+    Route::get('/get-user-list',[AuthController::class,'get_user_list']);
+
+    /*
      * Employee Api Route List
     */
     Route::get('get-employee-list',[EmployeeController::class,'get_employee_list']);

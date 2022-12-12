@@ -79,7 +79,47 @@ class AuthController extends Controller
 
         return response()->json([
             'status_code' =>200,
-            'token' =>$tokenResult
+            'message' =>'Success.',
+            'token' => $tokenResult,
+            'user' => $user
+        ]);
+    }
+
+    //authenticated user
+    public function authenticated_user()
+    {
+        $authenticated_user = Auth::user();
+
+        if(!empty($authenticated_user)){
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'Success.',
+                'user' => $authenticated_user
+            ]);
+        }
+        return response()->json([
+            'status_code' =>500,
+            'message' =>'Unauthorized'
+        ]);
+    }
+
+    //all user list
+    public function get_user_list()
+    {
+        $user_list = User::get(['id','name','email']);
+
+        //~ Check Availability of data
+        if(count($user_list)>0){
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'Success.',
+                'count_data' => count($user_list),
+                'user_list' => $user_list
+            ]);
+        }
+        return response()->json([
+            'status_code' =>204,
+            'message' =>'Data not found!'
         ]);
     }
 
