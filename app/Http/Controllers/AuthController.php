@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         if($validator->fails())
         {
-            return $validator->errors();
+            return response()->json($validator->errors(), 422);
         }
 
         $credentials = request(['email','password']);
@@ -68,9 +68,9 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials))
         {
             return response()->json([
-                'status_code' =>500,
+                'status_code' =>401,
                 'message' =>'Unauthorized'
-            ]);
+            ],401);
         }
 
         $user = User::where('email',$request->email)->first();
